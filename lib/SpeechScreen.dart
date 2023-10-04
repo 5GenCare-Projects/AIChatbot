@@ -1,9 +1,19 @@
+<<<<<<< HEAD
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:chat_bot/TextChatScreen.dart';
 import 'package:chat_bot/api_services.dart';
 import 'package:chat_bot/tts.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+=======
+import 'dart:convert';
+import 'package:avatar_glow/avatar_glow.dart';
+import 'package:chat_bot/TextChatScreen.dart';
+import 'package:chat_bot/tts.dart';
+import 'package:flutter/material.dart';
+import 'package:speech_to_text/speech_to_text.dart';
+import 'package:http/http.dart' as http;
+>>>>>>> b5ea7970f6d219d369d0c24f14b17ec684842dee
 
 class SpeechScreen extends StatefulWidget {
   SpeechScreen({super.key});
@@ -22,9 +32,29 @@ class _SpeechScreenState extends State<SpeechScreen> {
 
     void processSpeech() async {
       await Future.delayed(Duration(milliseconds: 500));
+<<<<<<< HEAD
       var msg = await ApiServices.sendMessage(userInput);
       print(msg);
       TextToSpeech.speak(msg);
+=======
+      String apiUrl =
+          'http://api.brainshop.ai/get?bid=175891&key=QttM520P9kyQGE1y&uid=12345&msg=[$userInput]';
+      try {
+        http.Response response = await http.get(Uri.parse(apiUrl));
+        if (response.statusCode == 200) {
+          String botResponse = response.body;
+          print(botResponse);
+          Map<String, dynamic> responseJson = json.decode(botResponse);
+          String botResponseText = responseJson["cnt"];
+          print(botResponse);
+          TextToSpeech.speak(botResponseText);
+        } else {
+          print('Request failed with status: ${response.statusCode}');
+        }
+      } catch (e) {
+        print('Error: $e');
+      }
+>>>>>>> b5ea7970f6d219d369d0c24f14b17ec684842dee
     }
 
     return Scaffold(

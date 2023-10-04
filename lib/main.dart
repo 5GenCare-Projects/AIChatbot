@@ -18,7 +18,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Speech to Text Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
+<<<<<<< HEAD
       home: ChatPage(),
+=======
+      home: SpeechScreen(),
+>>>>>>> b5ea7970f6d219d369d0c24f14b17ec684842dee
     );
   }
 }

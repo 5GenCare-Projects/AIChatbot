@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 import 'package:chat_bot/SpeechScreen.dart';
 import 'package:chat_bot/api_services.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_bot/chat_model.dart';
+=======
+import 'dart:convert';
+import 'package:chat_bot/SpeechScreen.dart';
+import 'package:flutter/material.dart';
+import 'package:chat_bot/chat_model.dart';
+import 'package:http/http.dart' as http;
+>>>>>>> b5ea7970f6d219d369d0c24f14b17ec684842dee
 import 'package:speech_to_text/speech_to_text.dart';
 
 class ChatPage extends StatefulWidget {
@@ -25,6 +33,45 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
 
+<<<<<<< HEAD
+=======
+    void getChatBotRef() async {
+      print(userInput);
+      String apiUrl =
+          'http://api.brainshop.ai/get?bid=175891&key=QttM520P9kyQGE1y&uid=12345&msg=[$userInput]';
+      try {
+        http.Response response = await http.get(Uri.parse(apiUrl));
+        if (response.statusCode == 200) {
+          String botResponse = response.body;
+          print(botResponse);
+          Map<String, dynamic> responseJson = json.decode(botResponse);
+          String botResponseText = responseJson["cnt"];
+          print(botResponse);
+          setState(() {
+            messages.add(
+              ChatMessage(
+                text: botResponseText,
+                type: ChatMessageType.bot,
+              ),
+            );
+            userInput = '';
+          });
+          Future.delayed(const Duration(milliseconds: 200), () {
+            scrollMethod();
+          });
+        } else {
+          messages.add(
+            ChatMessage(
+              text: 'Request failed with status: ${response.statusCode}',
+              type: ChatMessageType.bot,
+            ),
+          );
+        }
+      // ignore: empty_catches
+      } catch (e) {}
+    }
+
+>>>>>>> b5ea7970f6d219d369d0c24f14b17ec684842dee
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -38,6 +85,10 @@ class _ChatPageState extends State<ChatPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
+<<<<<<< HEAD
+=======
+            // 处理返回按钮的操作
+>>>>>>> b5ea7970f6d219d369d0c24f14b17ec684842dee
           },
         ),
       ),
@@ -57,6 +108,10 @@ class _ChatPageState extends State<ChatPage> {
                     width: 1.0,
                   ),
                 ),
+<<<<<<< HEAD
+=======
+                // color: Colors.grey[200],
+>>>>>>> b5ea7970f6d219d369d0c24f14b17ec684842dee
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
@@ -111,7 +166,11 @@ class _ChatPageState extends State<ChatPage> {
                             child: Padding(
                               padding: EdgeInsets.all(1.0),
                               child: GestureDetector(
+<<<<<<< HEAD
                                 onTap: () async {
+=======
+                                onTap: () {
+>>>>>>> b5ea7970f6d219d369d0c24f14b17ec684842dee
                                   if (userInput.isNotEmpty) {
                                     setState(() {
                                       messages.add(
@@ -122,6 +181,7 @@ class _ChatPageState extends State<ChatPage> {
                                       );
                                       _textEditingController.clear();
                                       _focusNode.unfocus();
+<<<<<<< HEAD
                                       Future.delayed(const Duration(milliseconds: 100), () {
                                         scrollMethod();
                                       });
@@ -133,11 +193,21 @@ class _ChatPageState extends State<ChatPage> {
                                     });
                                     Future.delayed(const Duration(milliseconds: 200), () {
                                       scrollMethod();
+=======
+                                      Future.delayed(const Duration(milliseconds: 200), () {
+                                        scrollMethod();
+                                      });
+                                      getChatBotRef();
+>>>>>>> b5ea7970f6d219d369d0c24f14b17ec684842dee
                                     });
                                   }
                                 },
                                 child: Container(
+<<<<<<< HEAD
                                   width: double.infinity,
+=======
+                                  width: double.infinity, // 设置容器的宽度
+>>>>>>> b5ea7970f6d219d369d0c24f14b17ec684842dee
                                   height: double.infinity,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
@@ -178,6 +248,7 @@ class _ChatPageState extends State<ChatPage> {
                       },
                       onTapUp: (details) async {
                         speechToText.stop();
+<<<<<<< HEAD
                         await Future.delayed(Duration(milliseconds: 100));
                         print(userInput);
                         setState(() {
@@ -192,6 +263,18 @@ class _ChatPageState extends State<ChatPage> {
                         });
                       },
                       child: Container(
+=======
+                        await Future.delayed(Duration(milliseconds: 500));
+                        messages.add(
+                          ChatMessage(
+                            text: userInput,
+                            type: ChatMessageType.user,
+                          ),
+                        );
+                        getChatBotRef();
+                      },
+                      child: Container( // 设置容器的高度
+>>>>>>> b5ea7970f6d219d369d0c24f14b17ec684842dee
                         child: FractionallySizedBox(
                           widthFactor: 0.8,
                           heightFactor: 0.8,
